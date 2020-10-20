@@ -9,7 +9,7 @@ ul[class="nav"]{
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #026e02;
+    background-color: #730606;
 }
 
 .nav > li {
@@ -29,7 +29,7 @@ ul[class="nav"]{
 }
 
 input, select {
-    width: 100%;
+    width: 30%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -39,13 +39,13 @@ input, select {
 }
 
 input[type=submit] {
-    width: 100%;
-    background-color: #026e02;
+    width: 10%;
+    background-color: #730606;
     color: white;
-    padding: 14px 20px;
+    padding: 20px 20px;
     margin: 8px 0;
     border: none;
-    border-radius: 4px;
+    border-radius: 40px;
     cursor: pointer;
 }
 

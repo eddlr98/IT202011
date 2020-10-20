@@ -2,6 +2,8 @@
     <form method="POST">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required/>
+        <label for="username">Username:</label>
+        <input type="username" id="username" name="username" required/>
         <label for="p1">Password:</label>
         <input type="password" id="p1" name="password" required/>
         <input type="submit" name="login" value="Login"/>
@@ -10,17 +12,21 @@
 <?php
 if (isset($_POST["login"])) {
     $email = null;
+    $username = null;
     $password = null;
     if (isset($_POST["email"])) {
         $email = $_POST["email"];
+    }
+    if (isset($_POST["username"])) {
+        $username = $_POST["username"];
     }
     if (isset($_POST["password"])) {
         $password = $_POST["password"];
     }
     $isValid = true;
-    if (!isset($email) || !isset($password)) {
+    if (!isset($email) || !isset($username) || !isset($password)) {
         $isValid = false;
-        flash("Email or password missing");
+        flash("Email, username or password missing");
     }
     if (!strpos($email, "@")) {
         $isValid = false;
