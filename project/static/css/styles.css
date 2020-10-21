@@ -2,6 +2,7 @@
 body {
     font-family: system;
     font-size: 1.5em;
+    text-align: center;
 }
 
 ul[class="nav"]{
@@ -25,11 +26,12 @@ ul[class="nav"]{
 }
 
 .nav > li a:hover {
-    background-color: #39ca40;
+    background-color: #ff1b1b;
+    color: black
 }
 
 input, select {
-    width: 30%;
+    width: 20%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
