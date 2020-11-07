@@ -11,11 +11,18 @@ if (!has_role("Admin")) {
 	<label>Name</label>
 	<input name="name" placeholder="Name"/>
 	<label>Quantity</label>
-	<input type="number" min="1" name="quantity"/>
-	<label>Price</label>
-	<input type="number" min="0.00" name="price"/>
-	<label>Description</label>
-	<input name="name" placeholder="Description"/>
+	<select name="">
+		<option value="0">Incubating</option>
+		<option value="1">Hatching</option>
+		<option value="2">Hatched</option>
+		<option value="3">Expired</option>
+	</select>
+	<label>Base Rate</label>
+	<input type="number" min="1" name="base_rate"/>
+	<label>Mod Min</label>
+	<input type="number" min="1" name="mod_min"/>
+	<label>Mod Max</label>
+	<input type="number" min="1" name="mod_max"/>
 	<input type="submit" name="save" value="Create"/>
 </form>
 
@@ -23,21 +30,21 @@ if (!has_role("Admin")) {
 if(isset($_POST["save"])){
 	//TODO add proper validation/checks
 	$name = $_POST["name"];
-	$quan = $_POST["quantity"];
-	$price = $_POST["price"];
-	$desc = $_POST["description"];
-	$mod = date('Y-m-d H:i:s');
-	$crtd = date('Y-m-d H:i:s');
+	$state = $_POST["state"];
+	$br = $_POST["base_rate"];
+	$min = $_POST["mod_min"];
+	$max = $_POST["mod_max"];
+	$nst = date('Y-m-d H:i:s');//calc
 	$user = get_user_id();
 	$db = getDB();
-	$stmt = $db->prepare("INSERT INTO Products (name, quantity, price, description, modified, created, user_id) VALUES(:name, :quan, :price, :desc, :mod, :crt, :user)");
+	$stmt = $db->prepare("INSERT INTO F20_Eggs (name, state, base_rate, mod_min, mod_max, next_stage_time, user_id) VALUES(:name, :state, :br, :min,:max,:nst,:user)");
 	$r = $stmt->execute([
 		":name"=>$name,
-		":quan"=>$quan,
-		":price"=>$price,
-		":desc"=>$desc,
-		":mod"=>$mod,
-		":crtd"=>$crtd,
+		":state"=>$state,
+		":br"=>$br,
+		":min"=>$min,
+		":max"=>$max,
+		":nst"=>$nst,
 		":user"=>$user
 	]);
 	if($r){
