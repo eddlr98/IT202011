@@ -15,7 +15,7 @@ if (!has_role("Admin")) {
 	<label>Price</label>
 	<input type="number" min="0.00" name="price"/>
 	<label>Description</label>
-	<input name="name" placeholder="Description"/>
+	<input name="description" placeholder="Description"/>
 	<input type="submit" name="save" value="Create"/>
 </form>
 
@@ -30,7 +30,7 @@ if(isset($_POST["save"])){
 	$crtd = date('Y-m-d H:i:s');
 	$user = get_user_id();
 	$db = getDB();
-	$stmt = $db->prepare("INSERT INTO Products (name, quantity, price, description, modified, created, user_id) VALUES(:name, :quan, :price, :desc, :mod, :crt, :user)");
+	$stmt = $db->prepare("INSERT INTO Products (name, quantity, price, description, modified, created, user_id) VALUES(:name, :quan, :price, :desc, :mod, :crtd, :user)");
 	$r = $stmt->execute([
 		":name"=>$name,
 		":quan"=>$quan,
