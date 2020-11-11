@@ -9,7 +9,7 @@ if (!has_role("Admin")) {
     <h3>Create Cart</h3>
     <form method="POST">
         <label>Product ID</label>
-        <input type="number" placeholder="product_id"/>
+        <input type="number" min="1" name="product_id"/>
         <label>Quantity</label>
         <input type="number" min="0" name="quantity"/>
         <label>Price</label>
