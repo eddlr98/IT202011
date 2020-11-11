@@ -35,7 +35,7 @@ if (isset($id)) {
             <div>
                 <p>Stats</p>
                 <div>Quantity: <?php safer_echo($result["quantity"]); ?></div>
-                <div>Description: <?php safer_echo($result["description"]); ?> - <?php safer_echo($result["mod_max"]); ?></div>
+                <div>Description: <?php safer_echo($result["description"]); ?></div>
                 <div>Owned by: <?php safer_echo($result["username"]); ?></div>
             </div>
         </div>
