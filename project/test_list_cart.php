@@ -39,10 +39,6 @@ if (isset($_POST["search"]) && !empty($query)) {
                         <div><?php safer_echo($r["name"]); ?></div>
                     </div>
                     <div>
-                        <div>Egg:</div>
-                        <div><?php safer_echo($r["egg"]); ?></div>
-                    </div>
-                    <div>
                         <div>Owner:</div>
                         <div><?php safer_echo($r["username"]); ?></div>
                     </div>

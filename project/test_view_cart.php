@@ -26,7 +26,7 @@ if (isset($id)) {
     }
 }
 ?>
-    <h3>View Incubator</h3>
+    <h3>View Cart</h3>
 <?php if (isset($result) && !empty($result)): ?>
     <div class="card">
         <div class="card-title">
@@ -35,9 +35,9 @@ if (isset($id)) {
         <div class="card-body">
             <div>
                 <p>Stats</p>
-                <div>Rate: <?php safer_echo($result["base_rate"]); ?></div>
-                <div>Modifier: <?php safer_echo($result["mod_min"]); ?> - <?php safer_echo($result["mod_max"]); ?></div>
-                <div>Egg: <?php safer_echo($result["egg"]); ?></div>
+                <div>Name: <?php safer_echo($result["name"]); ?></div>
+                <div>Quantity: <?php safer_echo($result["quantity"]); ?></div>
+                <div>Price: <?php safer_echo($result["price"]); ?></div>
                 <div>Owned by: <?php safer_echo($result["username"]); ?></div>
             </div>
         </div>
