@@ -17,7 +17,7 @@ if (isset($_GET["id"])) {
 $result = [];
 if (isset($id)) {
     $db = getDB();
-    $stmt = $db->prepare("SELECT crt.id,crt.name,crt.base_rate,crt.mod_min,crt.mod_max, Users.username, product.name as product FROM Cart as crt JOIN Users on crt.user_id = Users.id LEFT JOIN Products product on product.id = crt.product_id where crt.id = :id");
+    $stmt = $db->prepare("SELECT crt.id,crt.quantity,crt.price, Users.username, product.name as product FROM Cart as crt JOIN Users on crt.user_id = Users.id LEFT JOIN Products product on product.id = crt.product_id where crt.id = :id");
     $r = $stmt->execute([":id" => $id]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$result) {
