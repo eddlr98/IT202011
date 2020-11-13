@@ -9,32 +9,29 @@ if (!has_role("Admin")) {
 <?php
 //we'll put this at the top so both php block have access to it
 if (isset($_GET["id"])) {
-    $id = $_GET["id"];
+    $cid = $_GET["id"];
 }
 ?>
 <?php
 //saving
 if (isset($_POST["save"])) {
     //TODO add proper validation/checks
-    //$name = $_POST["name"];
-    $pid = $_POST["product_id"];
-    if ($pid <= 0) {
-        $pid = null;
+    $name = $_POST["name"];
+    $productID = $_POST["product_id"];
+    if ($cid <= 0) {
+        $cid = null;
     }
-    $quan = $_POST["quantity"];
-    $price = $_POST["price"];
+    $quantity = $_POST["quantity"];
     $user = get_user_id();
     $db = getDB();
     if (isset($id)) {
-        $stmt = $db->prepare("UPDATE Cart set product_id=:pid, quantity=:quan, price=:price where id=:id");
+        $stmt = $db->prepare("UPDATE Cart set quantity=:quantity where id=:id");
         $r = $stmt->execute([
-            ":pid" => $pid,
-            ":quan" => $quan,
-            ":price" => $price,
-            ":id" => $id
+            ":quantity"=>$quantity,
+            ":id" => $cid
         ]);
         if ($r) {
-            flash("Updated successfully with id: " . $id);
+            flash("Updated successfully with id: " . $cid);
         }
         else {
             $e = $stmt->errorInfo();
@@ -49,33 +46,31 @@ if (isset($_POST["save"])) {
 <?php
 //fetching
 $result = [];
-if (isset($id)) {
-    $id = $_GET["id"];
+if (isset($cid)) {
+    $cid = $_GET["id"];
     $db = getDB();
     $stmt = $db->prepare("SELECT * FROM Cart where id = :id");
-    $r = $stmt->execute([":id" => $id]);
+    $r = $stmt->execute([":id" => $cid]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 }
-//get products for dropdown
+//get pids for dropdown
 $db = getDB();
 $stmt = $db->prepare("SELECT id,name from Products LIMIT 10");
 $r = $stmt->execute();
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$productID = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
     <h3>Edit Cart</h3>
     <form method="POST">
-        <label>Product ID</label>
-        <select name="product_id" value="<?php echo $result["product_id"];?>" >
+        <label>Product</label>
+        <select name="id" value="<?php echo $result["id"];?>" >
             <option value="-1">None</option>
-            <?php foreach ($products as $product): ?>
-                <option value="<?php safer_echo($product["id"]); ?>" <?php echo ($result["product_id"] == $product["id"] ? 'selected="selected"' : ''); ?>
-                ><?php safer_echo($product["id"]); ?></option>
+            <?php foreach ($Products as $Product): ?>
+                <option value="<?php safer_echo($productID["id"]); ?>" <?php echo ($result["product_id"] == $productID["id"] ? 'selected="selected"' : ''); ?>
+                ><?php safer_echo($productID["name"]); ?></option>
             <?php endforeach; ?>
         </select>
         <label>Quantity</label>
-        <input type="number" min="1" name="quantity" value="<?php echo $result["quantity"]; ?>"/>
-        <label>Price</label>
-        <input type="number" min="1" name="price" value="<?php echo $result["price"]; ?>"/>
+        <input type="number" min="0" name="quantity" value="<?php echo $result["quantity"]; ?>"/>
         <input type="submit" name="save" value="Update"/>
     </form>
 

@@ -6,31 +6,43 @@ if (!has_role("Admin")) {
     die(header("Location: login.php"));
 }
 ?>
+<?php
+$db = getDB();
+$stmt = $db->prepare("SELECT id,name from Products LIMIT 10");
+$r = $stmt->execute();
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
     <h3>Create Cart</h3>
     <form method="POST">
-        <label>Product ID</label>
-        <input type="number" min="1" name="product_id"/>
+    <select name="product_id" value="<?php echo $result["product_id"];?>" >
+            <option value="-1">None</option>
+            <?php foreach ($products as $product): ?>
+                <option value="<?php safer_echo($product["id"]); ?>"
+                ><?php safer_echo($product["id"]); ?></option>
+            <?php endforeach; ?>
+        </select>
         <label>Quantity</label>
-        <input type="number" min="0" name="quantity"/>
+        <input type="number" min="1" name="quantity"/>
         <label>Price</label>
-        <input type="number" step="0.01" min="0" name="price"/>
+        <input type="number" min="1" name="price"/>
         <input type="submit" name="save" value="Create"/>
     </form>
 
 <?php
 if (isset($_POST["save"])) {
+    $id = $_POST["product_id"];
     //TODO add proper validation/checks
-    $pid = $_POST["product_id"];
-    $quan = $_POST["quantity"];
-    $price = $_POST["price"];
+    $pr = $_POST["price"];
+	$quantity = $_POST["quantity"];
     $user = get_user_id();
     $db = getDB();
-    $stmt = $db->prepare("INSERT INTO Cart (product_id, quantity, price, user_id) VALUES(:pid, :quan, :price,:user)");
+    $stmt = $db->prepare("SELECT FROM Products(price) VALUES(:pr)");
+    $stmt = $db->prepare("INSERT INTO Cart (product_id, price, quantity,user_id) VALUES(:id, :pr, :quantity, :user)");
     $r = $stmt->execute([
-        ":pid" => $pid,
-        ":quan" => $quan,
-        ":price" => $price,
-        ":user" => $user
+        ":id"=>$id,
+        ":pr"=>$pr,
+		":quantity"=>$quantity,
+		":user"=>$user
     ]);
     if ($r) {
         flash("Created successfully with id: " . $db->lastInsertId());
