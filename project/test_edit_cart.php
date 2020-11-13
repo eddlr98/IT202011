@@ -9,29 +9,29 @@ if (!has_role("Admin")) {
 <?php
 //we'll put this at the top so both php block have access to it
 if (isset($_GET["id"])) {
-    $CartID = $_GET["id"];
+    $cid = $_GET["id"];
 }
 ?>
 <?php
 //saving
 if (isset($_POST["save"])) {
     //TODO add proper validation/checks
-    $name = $_POST["name"];
-    $pid = $_POST["product_id"];
-    if ($CartID <= 0) {
-        $CartID = null;
+    //$name = $_POST["name"];
+    //$products = $_POST["product_id"];
+    if ($cid <= 0) {
+        $cid = null;
     }
     $quantity = $_POST["quantity"];
     $user = get_user_id();
     $db = getDB();
-    if (isset($id)) {
+    if (isset($cid)) {
         $stmt = $db->prepare("UPDATE Cart set quantity=:quantity where id=:id");
         $r = $stmt->execute([
             ":quantity"=>$quantity,
-            ":id" => $CartID
+            ":id" => $cid
         ]);
         if ($r) {
-            flash("Updated successfully with id: " . $CartID);
+            flash("Updated successfully with id: " . $cid);
         }
         else {
             $e = $stmt->errorInfo();
@@ -46,27 +46,26 @@ if (isset($_POST["save"])) {
 <?php
 //fetching
 $result = [];
-if (isset($CartID)) {
-    $CartID = $_GET["id"];
+if (isset($cid)) {
+    $cid = $_GET["id"];
     $db = getDB();
     $stmt = $db->prepare("SELECT * FROM Cart where id = :id");
-    $r = $stmt->execute([":id" => $CartID]);
+    $r = $stmt->execute([":id" => $cid]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 }
-//get pids for dropdown
 $db = getDB();
 $stmt = $db->prepare("SELECT id,name from Products LIMIT 10");
 $r = $stmt->execute();
-$pid = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
     <h3>Edit Cart</h3>
     <form method="POST">
         <label>Product</label>
         <select name="id" value="<?php echo $result["id"];?>" >
             <option value="-1">None</option>
-            <?php foreach ($Products as $Product): ?>
-                <option value="<?php safer_echo($pid["id"]); ?>" <?php echo ($result["product_id"] == $pid["id"] ? 'selected="selected"' : ''); ?>
-                ><?php safer_echo($pid["name"]); ?></option>
+            <?php foreach ($products as $product): ?>
+                <option value="<?php safer_echo($result["product_id"]); ?>" <?php echo ($result["product_id"] == $product["id"] ? 'selected="selected"' : ''); ?>
+                ><?php safer_echo($product["name"]); ?></option>
             <?php endforeach; ?>
         </select>
         <label>Quantity</label>
