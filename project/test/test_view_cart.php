@@ -1,4 +1,4 @@
-<?php require_once(__DIR__ . "/partials/nav.php"); ?>
+<?php require_once(__DIR__ . "../partials/nav.php"); ?>
 <?php
 if (!has_role("Admin")) {
     //this will redirect to login and kill the rest of this script (prevent it from executing)
@@ -17,7 +17,7 @@ if (isset($_GET["id"])) {
 $result = [];
 if (isset($id)) {
     $db = getDB();
-    $stmt = $db->prepare("SELECT product.id,name,quantity,price,description, user_id, Users.username FROM Products as product JOIN Users on product.user_id = Users.id where product.id = :id");
+    $stmt = $db->prepare("SELECT Cart.price, Products.name,Products.description, Cart.quantity from Cart join Products on Cart.product_id = product_id where Cart.id = :id");
     $r = $stmt->execute([":id" => $id]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$result) {
@@ -26,6 +26,7 @@ if (isset($id)) {
     }
 }
 ?>
+    <h3>View Item</h3>
 <?php if (isset($result) && !empty($result)): ?>
     <div class="card">
         <div class="card-title">
@@ -34,13 +35,13 @@ if (isset($id)) {
         <div class="card-body">
             <div>
                 <p>Stats</p>
+                <div>Price: <?php safer_echo($result["price"]); ?></div>
                 <div>Quantity: <?php safer_echo($result["quantity"]); ?></div>
                 <div>Description: <?php safer_echo($result["description"]); ?></div>
-                <div>Owned by: <?php safer_echo($result["username"]); ?></div>
             </div>
         </div>
     </div>
 <?php else: ?>
     <p>Error looking up id...</p>
 <?php endif; ?>
-<?php require(__DIR__ . "/partials/flash.php");
+<?php require(__DIR__ . "../partials/flash.php");
