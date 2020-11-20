@@ -20,6 +20,8 @@ if(isset($_POST["save"])){
 	$quan = $_POST["quantity"];
 	$price = $_POST["price"];
 	$desc = $_POST["description"];
+	$ctg = $_POST["category"];
+	$vis = $_POST[""];
 	$db = getDB();
 	if(isset($id)){
 		$stmt = $db->prepare("UPDATE Products set name=:name, quantity=:quan, price=:price, description=:desc where id=:id");
