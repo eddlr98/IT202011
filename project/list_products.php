@@ -8,7 +8,7 @@ if (isset($_POST["query"])) {
 }
 if (isset($_POST["search"]) && !empty($query)) {
     $db = getDB();
-    $stmt = $db->prepare("SELECT id,name,price, user_id from Products WHERE name like :q LIMIT 10");
+    $stmt = $db->prepare("SELECT id,name,price,category, user_id from Products WHERE name like :q LIMIT 10");
     $r = $stmt->execute([":q" => "%$query%"]);
     if ($r) {
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -36,12 +36,15 @@ if (isset($_POST["search"]) && !empty($query)) {
                         <div><?php safer_echo($r["price"]); ?></div>
                     </div>
                     <div>
+                        <div>Category:</div>
+                        <div><?php safer_echo($r["category"]); ?></div>
+                    </div>
+                    <div>
                         <div>Owner Id:</div>
                         <div><?php safer_echo($r["user_id"]); ?></div>
                     </div>
                     <div>
-                        <a type="button" href="test_edit_products.php?id=<?php safer_echo($r['id']); ?>">Edit</a>
-                        <a type="button" href="test_view_products.php?id=<?php safer_echo($r['id']); ?>">View</a>
+                        <a type="button" href="view_products.php?id=<?php safer_echo($r['id']); ?>">View</a>
                     </div>
                 </div>
             <?php endforeach; ?>
