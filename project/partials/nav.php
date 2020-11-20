@@ -12,8 +12,12 @@ require_once(__DIR__ . "/../lib/helpers.php");
         <?php endif; ?>
         <?php if (has_role("Admin")): ?>
             <li><a href="create_products.php">Create Products</a></li>
-            <li><a href="list_products.php">View Products</a></li>
+            <li><a href="list_products_admin.php">View Products</a></li>
             <li><a href="create_cart.php">Create Carts</a></li>
+            <li><a href="list_cart.php">View Carts</a></li>
+        <?php endif; ?>
+        <?php if (has_role("User")): ?>
+            <li><a href="list_products.php">View Products</a></li>
             <li><a href="list_cart.php">View Carts</a></li>
         <?php endif; ?>
         <?php if (is_logged_in()): ?>

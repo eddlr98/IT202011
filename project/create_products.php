@@ -13,10 +13,14 @@ if (!has_role("Admin")) {
 	<label>Quantity</label>
 	<input type="number" min="1" name="quantity"/>
 	<label>Price</label>
-	<input type="number" min="0.00" name="price"/>
+	<input type="number" step="0.01" min="0.00" name="price"/>
 	<label>Description</label>
 	<input name="description" placeholder="Description"/>
-	<input type="submit" name="save" value="Create"/>
+	<label>Category</label>
+	<input name="category" placeholder="Category"/>
+	<label>Visibile</label>
+	<input type="checkbox" name="visibility"/>
+  	<input type="submit" name="save" value="Create"/>
 </form>
 
 <?php
@@ -26,16 +30,23 @@ if(isset($_POST["save"])){
 	$quan = $_POST["quantity"];
 	$price = $_POST["price"];
 	$desc = $_POST["description"];
+	$ctg = $_POST["category"];
+	$vis = false;
+	if (isset($_POST["visibility"]) && $_POST["visibility"] == 'on') {
+		$vis = true;
+	}
 	$mod = date('Y-m-d H:i:s');
 	$crtd = date('Y-m-d H:i:s');
 	$user = get_user_id();
 	$db = getDB();
-	$stmt = $db->prepare("INSERT INTO Products (name, quantity, price, description, modified, created, user_id) VALUES(:name, :quan, :price, :desc, :mod, :crtd, :user)");
+	$stmt = $db->prepare("INSERT INTO Products (name, quantity, price, description, category, visibilty, modified, created, user_id) VALUES(:name, :quan, :price, :desc, :ctg, :vis, :mod, :crtd, :user)");
 	$r = $stmt->execute([
 		":name"=>$name,
 		":quan"=>$quan,
 		":price"=>$price,
 		":desc"=>$desc,
+		":ctg"=>$ctg,
+		":vis"=>$vis ? "1" : "0",
 		":mod"=>$mod,
 		":crtd"=>$crtd,
 		":user"=>$user
