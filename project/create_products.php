@@ -18,8 +18,21 @@ if (!has_role("Admin")) {
 	<input name="description" placeholder="Description"/>
 	<label>Category</label>
 	<input name="category" placeholder="Category"/>
-	<label>Visibile</label>
-	<input type="checkbox" name="visibility"/>
+	<label>Visibility</label>
+	<div class="form-group">
+		<div class="form-check">
+			<input class="form-check-input" type="radio" name="visibility" id="visibility" value="1">
+			<label class="form-check-label" for="visibility">
+				Visible
+			</label>
+		</div>
+		<div class="form-check">
+		<input class="form-check-input" type="radio" name="visibility" id="visibility" value="0" checked>
+			<label class="form-check-label" for="visibility">
+				Not Visible
+			</label>
+		</div>
+	</div>
   	<input type="submit" name="save" value="Create"/>
 </form>
 

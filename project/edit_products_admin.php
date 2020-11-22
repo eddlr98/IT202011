@@ -74,8 +74,21 @@ if(isset($id)){
 	<input name="description" placeholder="Description" value="<?php echo $result["description"];?>"/>
 	<label>Category</label>
 	<input name="category" placeholder="Category" value="<?php echo $result["category"];?>"/>
-	<label>Visibile</label>
-	<input type="radio" <?php echo ($result["visibility"]?"checked='checked'":"");?> name="visibility"/>
+	<label>Visibility</label>
+	<div class="form-group">
+		<div class="form-check">
+			<input class="form-check-input" type="radio" name="visibility" id="visibility" value="1">
+			<label class="form-check-label" for="visibility">
+				Visible
+			</label>
+		</div>
+		<div class="form-check">
+		<input class="form-check-input" type="radio" name="visibility" id="visibility" value="0">
+			<label class="form-check-label" for="visibility">
+				Not Visible
+			</label>
+		</div>
+	</div>
 	<input type="submit" name="save" value="Update"/>
 </form>
 
