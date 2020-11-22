@@ -26,10 +26,10 @@ require_once(__DIR__ . "/../lib/helpers.php");
                     Admin
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="nav-link" href="<?php echo getURL("create_products.php"); ?>">Create Products</a></li>
-                    <a class="nav-link" href="<?php echo getURL("list_products_admin.php"); ?>">View Products</a></li>
-                    <a class="nav-link" href="<?php echo getURL("create_cart.php"); ?>">Create Carts</a></li>
-                    <a class="nav-link" href="<?php echo getURL("list_cart.php"); ?>">View Carts</a></li>
+                    <a class="nav-link" href="<?php echo getURL("create_products.php"); ?>">Create Products</a>
+                    <a class="nav-link" href="<?php echo getURL("list_products_admin.php"); ?>">View Products</a>
+                    <a class="nav-link" href="<?php echo getURL("create_cart.php"); ?>">Create Carts</a>
+                    <a class="nav-link" href="<?php echo getURL("list_cart.php"); ?>">View Carts</a>
                 </div>
             </li>
         <?php endif; ?>
