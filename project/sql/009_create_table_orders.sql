@@ -9,5 +9,5 @@ CREATE TABLE Orders(
     created     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
 	primary key (id),
 	foreign key (user_id) references Users(id),
-	foreign key (product_id) references F20_Products(id)
+	foreign key (product_id) references Products(id)
 )
