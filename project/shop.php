@@ -9,31 +9,22 @@ if (!is_logged_in()) {
 ?>
 <?php
 $db = getDB();
-//fetch and update latest user's balance
-$stmt = $db->prepare("SELECT points from Users where id = :id");
-$r = $stmt->execute([":id"=>get_user_id()]);
-if($r){
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    if($result){
-        $balance = $result["points"];
-        $_SESSION["user"]["balance"] = $balance;
-    }
-}
+
 //fetch item list
-$stmt = $db->prepare("SELECT * FROM F20_Products WHERE quantity > 0 ORDER BY CREATED DESC LIMIT 10");
+$stmt = $db->prepare("SELECT * FROM Products WHERE quantity > 0 ORDER BY CREATED DESC LIMIT 10");
 $stmt->execute();
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-$balance = getBalance();
-$cost = calcNextEggCost();
+$balance = 1000000;
+$cost = calcNextProdCost();
 ?>
     <script>
         //php will exec first so just the value will be visible on js side
         let balance = <?php echo $balance;?>;
         let cost = <?php echo $cost;?>;
 
-        function makePurchase() {
+        /*function makePurchase() {
             //todo client side balance check
             if (cost > balance) {
                 alert("You can't afford this right now");
@@ -60,7 +51,7 @@ $cost = calcNextEggCost();
             //map any key/value data similar to query params
             xhttp.send();
 
-        }
+        }*/
         function addToCart(itemId, cost){
             if (cost > balance) {
                 alert("You can't afford this right now");
