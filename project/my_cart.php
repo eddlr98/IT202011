@@ -1,13 +1,37 @@
 <?php require_once(__DIR__ . "/partials/nav.php"); ?>
 
 <?php
+
 if (!is_logged_in()) {
     //this will redirect to login and kill the rest of this script (prevent it from executing)
-    flash("You must be logged in to access this page");
+    flash("You must be logged in to view your cart");
     die(header("Location: login.php"));
 }
-
+?>
+<?php
 $db = getDB();
+$id = get_user_id();
+
+if (isset($_POST["quantity"])){
+  if ($_POST["quantity"] == 0){
+    $stmt = $db->prepare("DELETE FROM Cart where id = :id AND user_id = :uid");
+    $r = $stmt->execute([":id"=>$_POST["cartId"], ":uid"=>get_user_id()]);
+    if($r){
+        flash("Item quantity = 0, removing from cart", "success");
+    }
+
+  }
+
+}
+
+if(isset($_POST["clear"])){
+    $stmt = $db->prepare("DELETE FROM Cart where user_id = :uid");
+    $r = $stmt->execute([":uid"=>get_user_id()]);
+    if($r){
+        flash("Deleted all items from cart", "success");
+    }
+}
+
 
 if(isset($_POST["delete"])){
     $stmt = $db->prepare("DELETE FROM Cart where id = :id AND user_id = :uid");
@@ -16,78 +40,76 @@ if(isset($_POST["delete"])){
         flash("Deleted item from cart", "success");
     }
 }
+
 if(isset($_POST["update"])){
-    $stmt = $db->prepare("UPDATE Cart set quantity = :q where id = :id");
-    $r = $stmt->execute([":id"=>$_POST["cartId"], ":q"=>$_POST["quantity"]]);
+    $stmt = $db->prepare("UPDATE Cart set quantity = :q where id = :id AND user_id = :uid");
+    $r = $stmt->execute([":id"=>$_POST["cartId"], ":q"=> $_POST["quantity"], ":uid"=> $id]);
     if($r){
         flash("Updated quantity", "success");
     }
 }
 
+if (isset($id)) {
+    $stmt = $db->prepare("SELECT Cart.*,Products.name, Products.description, Users.username ,
+    (Products.price * Cart.quantity) as sub from Cart JOIN Users on Users.id = Cart.user_id JOIN Products on Products.id = Cart.product_id
+     WHERE Users.id = :q LIMIT 10");
 
-$stmt = $db->prepare("SELECT c.id, p.name, c.price, c.quantity, (c.price * c.quantity) as sub from Cart c JOIN Products p on c.product_id = p.id where c.user_id = :id");
-$stmt->execute([":id"=>get_user_id()]);
-$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $r = $stmt->execute([":q" => $id]);
+    if ($r) {
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    else {
+        flash("There was a problem fetching the results " . var_export($stmt->errorInfo(), true));
+    }
+} else{flash("You do not have a valid ID");}
+$total = 0;
+foreach($results as $a){
+  if ($a["sub"]){
+    $total += $a["sub"];
+
+  }
+}
+
 ?>
-    <div class="container-fluid">
-        <h3>My Cart</h3>
-        <div class="list-group">
-        <?php if($results && count($results) > 0):?>
-            <div class="list-group-item">
-                <div class="row">
-                    <div class="col">
-                       Name
-                    </div>
-                    <div class="col">
-                        Price
-                    </div>
-                    <div class="col">
-                        Quantity
-                    </div>
-                    <div class="col">
-                        Subtotal
-                    </div>
-                    <div class="col">
-                        Actions
-                    </div>
-                </div>
-            </div>
-            <?php foreach($results as $r):?>
-            <div class="list-group-item">
-                <form method="POST">
-                <div class="row">
-                    <div class="col">
-                        <?php echo $r["name"];?>
-                    </div>
-                    <div class="col">
-                        <?php echo $r["price"];?>
-                    </div>
-                    <div class="col">
+<h3>My Cart<h3>
+<form method = "POST">
+  <button style= "margin: 1em; float: right;" type="submit" class="btn btn-danger" name="clear">Clear Cart</button>
+</form>
 
-                            <input type="number" min="0" name="quantity" value="<?php echo $r["quantity"];?>"/>
-                            <input type="hidden" name="cartId" value="<?php echo $r["id"];?>"/>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Product Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Price</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Subtotal</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
 
-                    </div>
-                    <div class="col">
-                        <?php echo $r["sub"];?>
-                    </div>
-                    <div class="col">
-                        <!-- form split was on purpose-->
-                        <input type="submit" class="btn btn-success" name="update" value="Update"/>
-                        </form>
-                        <form method="POST">
-                            <input type="hidden" name="cartId" value="<?php echo $r["id"];?>"/>
-                            <input type="submit" class="btn btn-danger" name="delete" value="Delete Cart Item"/>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach;?>
-        <?php else:?>
-        <div class="list-group-item">
-            No items in cart
-        </div>
-        <?php endif;?>
-        </div>
-    </div>
-<?php require(__DIR__ . "/partials/flash.php");
+    <?php if (count($results) > 0): ?>
+      <?php foreach ($results as $r): ?>
+    <tr>
+      <td><a href = "view_products.php?id=<?php safer_echo($r['product_id']); ?>"> <?php safer_echo($r["name"])?></a></td>
+      <td><?php safer_echo($r["description"])?></td>
+      <td>$<?php safer_echo($r["price"])?></td>
+      <td><form method = "POST"  id = "1" style = "display: flex;">
+        <input  style = "width: 70;" type="number" min="0" name="quantity" value="<?php echo $r["quantity"];?>"/>
+        <input type="hidden" name="cartId" value="<?php echo $r["id"];?>"/>
+        <button type="submit" class="btn btn-success" name="update">Update</button>
+      </form></td>
+      <td>$<?php safer_echo($r["sub"])?></td>
+      <td><button form= "1" type="submit" class="btn btn-danger" name="delete" value="Delete Cart Item">Delete</button></td>
+    </tr>
+  <?php endforeach; ?>
+  <tr>
+    <td>Total: $<?php safer_echo($total)?></td>
+  </tr>
+  <?php else: ?>
+      <p>No results, Cart is Empty</p>
+  <?php endif; ?>
+  </tbody>
+</table>
+<?php require_once(__DIR__ . "/partials/flash.php"); ?>

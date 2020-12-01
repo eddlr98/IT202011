@@ -98,33 +98,5 @@ $cost = calcNextProdCost();
                 </div>
             </div>
         <?php endforeach;?>
-        <div class="col-2">
-            <div class="card">
-                <div class="card-body">
-                <div class="card-title">
-                    Purchase Random Egg
-                </div>
-                <div class="card-footer">
-                    <button type="button" onclick="makePurchase();" class="btn btn-primary btn-lg">Purchase
-                        (Cost: <?php echo $cost; ?>)
-                    </button>
-                </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-2">
-            <div class="card">
-                <div class="card-body">
-                <div class="card-title">
-                    Purchase Random Incubator
-                </div>
-                <div class="card-footer">
-                    <button type="button" onclick="alert('Coming soon');" class="btn btn-primary btn-lg">Purchase
-                        (Cost: <?php echo $cost; ?>)
-                    </button>
-                </div>
-                </div>
-            </div>
-        </div>
     </div>
 <?php require(__DIR__ . "/partials/flash.php");
