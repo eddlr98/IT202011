@@ -106,14 +106,14 @@ function getBalance() {
     }
     return 0;
 }
-function calcNextEggCost(){
+function calcNextProdCost(){
 	if(is_logged_in()){
 		$db = getDB();
-		$stmt = $db->prepare("SELECT count(id) as eggs from F20_Eggs where user_id = :id");
+		$stmt = $db->prepare("SELECT count(id) as prods from Products where user_id = :id");
 		$stmt->execute([":id"=>get_user_id()]);
 		$result = $stmt->fetch(PDO::FETCH_ASSOC);
-		if($result && isset($result["eggs"])){
-			$c = (int)$result["eggs"];
+		if($result && isset($result["prods"])){
+			$c = (int)$result["prods"];
 			$base_cost = 10;
 			return $c * $base_cost; // first is free
 		}

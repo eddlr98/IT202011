@@ -1,0 +1,4 @@
+ALTER TABLE Products
+    ALTER COLUMN price       decimal(10, 2) default 999999.99,
+    ALTER COLUMN modified    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP on update current_timestamp,
+    ALTER COLUMN created     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ;
