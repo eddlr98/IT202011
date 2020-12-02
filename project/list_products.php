@@ -36,6 +36,8 @@ if (isset($_POST["Search"])) {
         $dbQuery .= " ORDER BY $sort ASC";
     }
     
+    $dbQuery .= " LIMIT 10";
+
     $db = getDB();
     $stmt = $db->prepare($dbQuery);
     $r = $stmt->execute($params);
