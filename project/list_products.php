@@ -28,7 +28,7 @@ if (isset($_POST["Search"])) {
         $params[":cat"] = $selectedCtg; 
     }
     if ($query != "") {
-        $dbQuery .= " AND name like :q ";
+        $dbQuery .= " AND name LIKE :q ";
         $params[":q"] = $query;
     }
     if(isset($_POST["sort"])) {
@@ -36,6 +36,8 @@ if (isset($_POST["Search"])) {
         $dbQuery .= " ORDER BY $sort ASC";
     }
     
+    $dbQuery .= " LIMIT 10";
+
     $db = getDB();
     $stmt = $db->prepare($dbQuery);
     $r = $stmt->execute($params);
@@ -72,7 +74,7 @@ if (isset($_POST["Search"])) {
         <?php foreach ($results as $r): ?>
                     <div class="list-group-item">
                     <div>
-                    <div>Name: <?php safer_echo($r["name"]); ?></div>
+                        <div>Name: <?php safer_echo($r["name"]); ?></div>
                     </div>
                     <div>
                         <div>Price: $<?php safer_echo($r["price"]); ?></div>

@@ -52,7 +52,7 @@ if(isset($_POST["save"])){
 	$crtd = date('Y-m-d H:i:s');
 	$user = get_user_id();
 	$db = getDB();
-	$stmt = $db->prepare("INSERT INTO Products (name, quantity, price, description, category, visibilty, modified, created, user_id) VALUES(:name, :quan, :price, :desc, :ctg, :vis, :mod, :crtd, :user)");
+	$stmt = $db->prepare("INSERT INTO Products (name, quantity, price, description, category, visibility, modified, created, user_id) VALUES(:name, :quan, :price, :desc, :ctg, :vis, :mod, :crtd, :user)");
 	$r = $stmt->execute([
 		":name"=>$name,
 		":quan"=>$quan,
