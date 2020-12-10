@@ -47,20 +47,15 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <input type="text" name="state" class="form-control" placeholder="State" required>
         <input type="text" name="zipCode" class="form-control" placeholder="Zip Code" pattern="[0-9]{5}" required>
     </div>
-
+   
     
-    
-    <input type="hidden" name="subtotal" value="<?php echo $subtotal; ?>"/>
-    <input type="hidden" name="cquantity" value="<?php echo $r["quantity"]; ?>"/>
-    <input type="hidden" name="pquantity" value="<?php echo $r["pquantity"]; ?>"/>
-
 <h4>2 Payment Method</h4>
 
 <div class="form-group">
 		<div class="form-check">
 			<input class="form-check-input" type="radio" name="payMethod" id="cash" value="1" checked>
 			<label class="form-check-label" for="payMethod1">
-				Cash
+				Discover
 			</label>
 		</div>
 		<div class="form-check">
@@ -89,14 +84,6 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		</div>
 	</div>
 
-<h4>3 Review Items</h4>
-
-
-
-
-
-
-
 <h6>Amount on Card</h6>
 <div class="input-group mb-3" style="width: 20rem; float: inline-end">
   <div class="input-group-prepend">
@@ -105,8 +92,34 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <input type="text" class="form-control" aria-label="Card Amount">
 </div>
 
+<h4>3 Review Items</h4>
+
+<table class="table table-striped" style="width: 50rem;">
+  <thead>
+    <tr>
+      <th scope="col">Product Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Subtotal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <div class="results">     
+        <?php
+        $total = 0;
+        foreach ($results as $product):?>
+        <tr>
+            <td><?php safer_echo($product["product"]); ?></td>
+            <td><?php safer_echo($product["price"]); ?></td>
+            <td><?php safer_echo($product["quantity"]); ?></td>
+            <td> $<?php safer_echo($product["price"]*$product["quantity"]); $total+=$product["price"]*$product["quantity"]; ?></td>              
+        </tr>
+        <?php endforeach; ?>
+    </div>
+</table>
+
 <div class="card" style="width: 30rem; float: left;">
-  <div class="card-header">Order Total:</div>
+  <div class="card-header">Order Total: $<?php safer_echo($total); ?></div>
   <div class="card-body">
     <button style= "margin: 0; float: left;" type="submit" class="btn btn-success">Place your order</button>
   </div>
