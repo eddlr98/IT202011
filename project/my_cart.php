@@ -99,7 +99,7 @@ foreach($results as $a){
       <td><?php safer_echo($r["description"])?></td>
       <td>$<?php safer_echo($r["price"])?></td>
       <td><form method = "POST"  id = "1" style = "display: flex;">
-        <input  style = "width: 70;" type="number" min="0" name="quantity" value="<?php echo $r["quantity"];?>"/>
+        <input  style = "width: 100;" type="number" min="0" name="quantity" value="<?php echo $r["quantity"];?>"/>
         <input type="hidden" name="cartId" value="<?php echo $r["id"];?>"/>
         <button type="submit" class="btn btn-success" name="update">Update</button>
       </form></td>
