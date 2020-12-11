@@ -17,38 +17,38 @@ $r = $stmt->execute([":id" => $id]);
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <form method="POST">
-<div class="card" style="width: 50em; float: right;">
-  <div class="card-body">
-    <button style= "margin: 0; float: right;" id="placeOrder" name="submit" type="submit" value="submit" class="btn btn-success">Place your order</button>
-    <h5 class="card-title">Order Summary</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">
-    <table class="table table-striped" style="width: 50rem;">
-  <thead>
-    <tr>
-      <th scope="col">Product Name</th>
-      <th scope="col">Price</th>
-      <th scope="col">Quantity</th>
-      <th scope="col">Subtotal</th>
-    </tr>
-  </thead>
-  <tbody>
-    <div class="results">     
-        <?php
-        $totPrice = 0;
-        foreach ($results as $product):?>
-        <tr>
-            <td><?php safer_echo($product["product"]); ?></td>
-            <td><?php safer_echo($product["price"]); ?></td>
-            <td><?php safer_echo($product["quantity"]); ?></td>
-            <td>$<?php safer_echo($product["price"]*$product["quantity"]); $totPrice+=$product["price"]*$product["quantity"]; ?></td>              
-        </tr>
-        <?php endforeach; ?>
-    </div>
-  </table>
-      <b>Order Total: $<?php safer_echo($totPrice);?></b></p>
+  <div class="card" style="width: 50em; float: right;">
+    <div class="card-body">
+      <button style= "margin: 0; float: right;" id="placeOrder" name="submit" type="submit" form="form1" value="Submit"  class="btn btn-success">Place your order</button>
+      <h5 class="card-title">Order Summary</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+      <p class="card-text">
+      <table class="table table-striped" style="width: 50rem;">
+        <thead>
+          <tr>
+            <th scope="col">Product Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <div class="results">     
+              <?php
+              $totPrice = 0;
+              foreach ($results as $product):?>
+              <tr>
+                  <td><?php safer_echo($product["product"]); ?></td>
+                  <td><?php safer_echo($product["price"]); ?></td>
+                  <td><?php safer_echo($product["quantity"]); ?></td>
+                  <td>$<?php safer_echo($product["price"]*$product["quantity"]); $totPrice+=$product["price"]*$product["quantity"]; ?></td>              
+              </tr>
+              <?php endforeach; ?>
+          </div>
+      </table>
+          <b>Order Total: $<?php safer_echo($totPrice);?></b></p>
+      </div>
   </div>
-</div>
 </form>
 <?php
   if(isset($_POST["submit"])) {
@@ -153,9 +153,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>
 
-<form method="POST">
-
-
+<form method="POST" id="form1">
 
 <h4>- Shipping Address -</h4>
 
@@ -220,6 +218,9 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </div>
   <input type="text" class="form-control" aria-label="Card Amount">
 </div>
+
+
+
 </form>
 
 <?php require(__DIR__ . "/partials/flash.php"); ?>
