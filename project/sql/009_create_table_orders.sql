@@ -1,6 +1,5 @@
 CREATE TABLE Orders(
 	id int auto_increment,
-	product_id int,
 	user_id int,
 	quantity int,
 	price int,
@@ -9,5 +8,4 @@ CREATE TABLE Orders(
     created     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
 	primary key (id),
 	foreign key (user_id) references Users(id),
-	foreign key (product_id) references Products(id)
 )
