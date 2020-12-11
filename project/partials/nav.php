@@ -31,6 +31,7 @@ require_once(__DIR__ . "/../lib/helpers.php");
                     <a class="nav-link" href="<?php echo getURL("list_products_admin.php"); ?>">View Products</a>
                     <a class="nav-link" href="<?php echo getURL("create_cart.php"); ?>">Create Carts</a>
                     <a class="nav-link" href="<?php echo getURL("list_cart.php"); ?>">View Carts</a>
+                    <a class="nav-link" href="<?php echo getURL("order_admin.php"); ?>">View Orders</a>
                 </div>
             </li>
         <?php endif; ?>
