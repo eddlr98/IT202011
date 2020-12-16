@@ -109,24 +109,40 @@ if (isset($_POST["saved"])) {
 
 ?>
 
-<form method="POST">
-        <div class="form-group">
+    <form method="POST">
+        <h4>Change Account Details</h4>
+        <div class="input-group mb-3" style="width: 30rem;">
             <label for="email">Email</label>
             <input class="form-control" type="email" name="email" value="<?php safer_echo(get_email()); ?>"/>
         </div>
-        <div class="form-group">
+        <div class="input-group mb-3" style="width: 30rem;">
             <label for="username">Username</label>
             <input class="form-control" type="text" maxlength="60" name="username"
                    value="<?php safer_echo(get_username()); ?>"/>
         </div>
-        <div class="form-group">
+        <div class="input-group mb-3" style="width: 30rem;">
             <!-- DO NOT PRELOAD PASSWORD-->
             <label for="pw">Password</label>
             <input class="form-control" type="password" name="password"/>
         </div>
-        <div class="form-group">
+        <div class="input-group mb-3" style="width: 30rem;">
             <label for="cpw">Confirm Password</label>
             <input class="form-control" type="password" name="confirm"/>
+        </div>
+        <div class="form-group">
+            <label for="visibility">Account Visibility</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="visibility" id="private" value="0" checked>
+                <label class="form-check-label" for="visibility0">
+                    Private (email address hidden from other users)
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="visibility" id="public" value="1" >
+                <label class="form-check-label" for="visibility1">
+                    Public (email address visible to other users)
+                </label>
+            </div>
         </div>
         <input class="form-control" type="submit" name="saved" value="Save Profile"/>
     </form>

@@ -175,7 +175,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="form-group">
     <div class="form-check">
 			<input class="form-check-input" type="radio" name="payMethod" id="cash" value="-1" checked>
-			<label class="form-check-label" for="payMethod1">
+			<label class="form-check-label" for="payMethod0">
 				--Please Select--
 			</label>
 		</div>
