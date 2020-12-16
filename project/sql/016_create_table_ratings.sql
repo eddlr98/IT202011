@@ -6,6 +6,6 @@ CREATE TABLE Ratings(
     comment       varchar(120),
     created       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
-    FOREIGN KEY (product_id) REFERENCES Products(id),
-    FOREIGN KEY (user_id)) REFERENCES Users(id);
+    FOREIGN KEY (product_id) REFERENCES Products (id),
+    FOREIGN KEY (user_id) REFERENCES Users (id)
 )
