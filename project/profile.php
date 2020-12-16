@@ -64,8 +64,9 @@ if (isset($_POST["saved"])) {
         }
     }
     if ($isValid) {
-        $stmt = $db->prepare("UPDATE Users set email = :email, username= :username where id = :id");
-        $r = $stmt->execute([":email" => $newEmail, ":username" => $newUsername, ":id" => get_user_id()]);
+        $newVis = $_POST["visibility"];
+        $stmt = $db->prepare("UPDATE Users set email = :email, username= :username, visibility = :visibility where id = :id");
+        $r = $stmt->execute([":email" => $newEmail, ":username" => $newUsername, ":visibility" => $newVis ,":id" => get_user_id()]);
         if ($r) {
             flash("Updated profile");
         }
@@ -144,6 +145,6 @@ if (isset($_POST["saved"])) {
                 </label>
             </div>
         </div>
-        <input class="form-control" type="submit" name="saved" value="Save Profile"/>
+        <button style= "margin: 0; float: left;" name="submit" type="submit" value="Save Profile"  class="btn btn-success">Save Profile</button>
     </form>
 <?php require(__DIR__ . "/partials/flash.php");
