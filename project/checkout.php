@@ -127,19 +127,19 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
       $orderItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
       foreach($orderItems as $orderItem):
-          $pid = $orderItem["product_id"];
-          $itemQuantity = $orderItem["quantity"];
-          $unitPrice = $orderItem["price"];
+        $pid = $orderItem["product_id"];
+        $Quantity = $orderItem["quantity"];
+        $unitPrice = $orderItem["price"];
 
-          $db = getDB();
-          $stmt = $db->prepare("INSERT INTO OrderItems (order_id,product_id,quantity,unit_price) VALUES(:order,:pid,:quan,:uprice)");
-          $r = $stmt->execute(["order"=>$oid,":pid"=>$pid,":quan"=>$itemQuan,":uprice"=>$unitPrice]);
+        $db = getDB();
+        $stmt = $db->prepare("INSERT INTO OrderItems (order_id,product_id,quantity,unit_price) VALUES(:order,:pid,:quan,:uprice)");
+        $r = $stmt->execute(["order"=>$oid,":pid"=>$pid,":quan"=>$Quantity,":uprice"=>$unitPrice]);
 
-          //reduce product stock by amount bought
-          $db = getDB();
-          $stmt = $db->prepare("UPDATE Products SET quantity=quantity-:itemQuan where id=:pid");
-          $r = $stmt->execute([":pid"=>$pid,":itemQuan"=>$itemQuan]);
-      endforeach;
+        //reduce product stock by amount bought
+        $db = getDB();
+        $stmt = $db->prepare("UPDATE Products SET quantity=quantity-:q where id=:pid");
+        $r = $stmt->execute([":pid"=>$pid,":q"=>$Quantity]);
+    endforeach;
 
       $userID = get_user_id();
       $db = getDB();
@@ -175,7 +175,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="form-group">
     <div class="form-check">
 			<input class="form-check-input" type="radio" name="payMethod" id="cash" value="-1" checked>
-			<label class="form-check-label" for="payMethod1">
+			<label class="form-check-label" for="payMethod0">
 				--Please Select--
 			</label>
 		</div>
