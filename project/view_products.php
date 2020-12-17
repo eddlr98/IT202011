@@ -152,7 +152,7 @@ if($ratings){
     <div>
         <br>
     </div>
-        <table class="table table-striped" style="width: 50rem;">
+        <table class="table table-striped" style="width: 90rem;">
             <thead>
             <tr>
                 <th scope="col">Reviewed By</th>
