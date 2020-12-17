@@ -133,7 +133,7 @@ if (isset($_POST["saved"])) {
         <div class="form-group">
             <label for="visibility">Account Visibility</label>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="visibility" id="private" value="0" checked/>
+                <input class="form-check-input" type="radio" name="visibility" id="private" value="0" />
                 <label class="form-check-label" for="visibility0">
                     Private (account hidden from other users)
                 </label>
@@ -145,6 +145,6 @@ if (isset($_POST["saved"])) {
                 </label>
             </div>
         </div>
-        <button style= "margin: 0; float: left;" name="submit" type="submit" value="Save Profile"  class="btn btn-success">Save Profile</button>
+        <button style= "margin: 0; float: left;" name="saved" type="submit" value="Save Profile"  class="btn btn-success">Save Profile</button>
     </form>
 <?php require(__DIR__ . "/partials/flash.php");
