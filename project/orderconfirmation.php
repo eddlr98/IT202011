@@ -40,7 +40,7 @@ if(has_role("User")){
       <div class="results">     
           <?php
           foreach ($orders as $order):?>
-          <tr>
+            <tr>
               <td><?php safer_echo($order["created"]); ?></td>
               <td><?php safer_echo($order["address"]); ?></td>
               <td>$<?php safer_echo($order["total_price"]); ?></td>              

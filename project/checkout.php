@@ -80,6 +80,16 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         flash("Please select a valid payment method.");
       }
     }
+
+    $affordable=1;
+    if(isset($_POST["cardbal"])){
+      $balance = $_POST["cardbal"];
+      if ($totPrice > $balance) {
+        $affordable=0;
+        flash("You can't afford this right now");
+      }
+    }
+  
     //check shop quantity of product before order palced
     $db = getDB();
     $stmt = $db->prepare("SELECT Cart.product_id, Cart.quantity, Products.name, Products.quantity as stock FROM Cart Join Products on Cart.product_id = Products.id JOIN Users on Cart.user_id = Users.id where Cart.user_id=:id");
@@ -98,7 +108,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     endforeach;
 
     // Finalize validity
-    if ($totAddr && ($payment!="-1") && $inStock) {
+    if ($totAddr && ($payment!="-1") && $inStock && $affordable) {
       $db = getDB();
       $stmt = $db->prepare("INSERT INTO Orders (user_id,created,address,payment_method,total_price) VALUES(:uid,:created,:address,:pay,:price)");
       $r = $stmt->execute([
@@ -214,9 +224,9 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <h6>Amount on Card</h6>
 <div class="input-group mb-3" style="width: 20rem; float: inline-end">
   <div class="input-group-prepend">
-    <span class="input-group-text">$</span>
+    <span class="input-group-text" >$</span>
   </div>
-  <input type="text" class="form-control" aria-label="Card Amount">
+  <input type="number" step="0.01" min="0.00" name="cardbal" class="form-control" aria-label="Card Amount">
 </div>
 
 
