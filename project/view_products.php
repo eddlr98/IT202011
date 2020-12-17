@@ -11,7 +11,7 @@ if (isset($_GET["id"])) {
 $result = [];
 if (isset($id)) {
     $db = getDB();
-    $stmt = $db->prepare("SELECT product.id,name,quantity,price,description,category, user_id, Users.username FROM Products as product JOIN Users on product.user_id = Users.id where product.id = :id");
+    $stmt = $db->prepare("SELECT product.id, name, quantity, price, description, category, user_id, Users.username FROM Products as product JOIN Users on product.user_id = Users.id where product.id = :id");
     $r = $stmt->execute([":id" => $id]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$result) {
@@ -20,18 +20,38 @@ if (isset($id)) {
     }
 }
 ?>
+
+<?php
+//
+    $userID = get_user_id();
+    $db = getDB();
+    $stmt = $db->prepare("SELECT Orders.id,OrderItems.product_id FROM Orders JOIN OrderItems where Orders.user_id = :id AND OrderItems.order_id = Orders.id");
+    $r = $stmt->execute([":id"=>$userID]);
+    $orderItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $ordered = false;
+    foreach($orderItems as $item):
+        if($item["product_id"]==$_GET["id"]){
+            $ordered = true;
+        }
+    endforeach;
+?>
+
+
+
+
 <?php if (isset($result) && !empty($result)): ?>
     <div class="card">
         <div class="card-title">
-            <?php safer_echo($result["name"]); ?>
+            <h3><?php safer_echo($result["name"]); ?></h3>
         </div>
         <div class="card-body">
             <div>
-                <p>Stats</p>
-                <div>Quantity: <?php safer_echo($result["quantity"]); ?></div>
-                <div>Description: <?php safer_echo($result["description"]); ?></div>
-                <div>Category: <?php safer_echo($result["category"]); ?></div>
-                <div>Owned by: <?php safer_echo($result["username"]); ?></div>
+                <h5>-- Stats --</h5>
+                <div><b>Quantity: </b><?php safer_echo($result["quantity"]); ?></div>
+                <div><b>Description: </b><?php safer_echo($result["description"]); ?></div>
+                <div><b>Category: </b><?php safer_echo($result["category"]); ?></div>
+                <div><b>Owned by: </b><?php safer_echo($result["username"]); ?></div>
             </div>
         </div>
     </div>
