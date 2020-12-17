@@ -44,16 +44,23 @@ if(has_role("Admin")){
     <tbody>
       <div class="results">     
           <?php
+          $profit = 0;
           foreach ($orders as $order):?>
           <tr>
               <td><?php safer_echo($order["created"]); ?></td>
               <td><?php safer_echo($order["id"]); ?></td>
               <td><?php safer_echo($order["address"]); ?></td>
-              <td>$<?php safer_echo($order["total_price"]); ?></td>              
+              <td>$<?php safer_echo($order["total_price"]); $profit+=$order["total_price"];?></td>              
             </tr>
           <?php endforeach; ?>
       </div>
   </table>
 </div>
+
+  <div class="card" style="width: 20em; float: right;">
+    <div class="card-body">
+      <h5 class="card-title">Total Profit: $<?php safer_echo($profit);?></p></h5>       
+    </div>
+  </div>
 
 <?php require(__DIR__ . "/partials/flash.php"); ?>
