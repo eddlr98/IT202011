@@ -50,7 +50,8 @@ if(has_role("Admin")){
               <td><?php safer_echo($order["created"]); ?></td>
               <td><?php safer_echo($order["id"]); ?></td>
               <td><?php safer_echo($order["address"]); ?></td>
-              <td>$<?php safer_echo($order["total_price"]); $profit+=$order["total_price"];?></td>              
+              <td>$<?php safer_echo($order["total_price"]); ?></td> 
+              <?php $profit+=$order["total_price"]; ?>             
             </tr>
           <?php endforeach; ?>
       </div>
