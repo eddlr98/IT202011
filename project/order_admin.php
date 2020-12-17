@@ -25,6 +25,19 @@ if(has_role("Admin")){
 
 ?>
 
+<?php
+  $profit = 0;
+  foreach ($orders as $order):?>
+  <?php $profit+=$order["total_price"]; ?>
+  <?php endforeach; ?>
+
+
+  <div class="card" style="width: 20em; float: right;">
+    <div class="card-body">
+      <h5 class="card-title">Total Profit: $<?php safer_echo($profit);?></p></h5>       
+    </div>
+  </div>
+
 <div class="results">
     <div>
         <div><h3>Orders:</h3></div>
@@ -50,18 +63,13 @@ if(has_role("Admin")){
               <td><?php safer_echo($order["created"]); ?></td>
               <td><?php safer_echo($order["id"]); ?></td>
               <td><?php safer_echo($order["address"]); ?></td>
-              <td>$<?php safer_echo($order["total_price"]); ?></td> 
-              <?php $profit+=$order["total_price"]; ?>             
+              <td>$<?php safer_echo($order["total_price"]); ?></td>             
             </tr>
           <?php endforeach; ?>
       </div>
   </table>
 </div>
 
-  <div class="card" style="width: 20em; float: right;">
-    <div class="card-body">
-      <h5 class="card-title">Total Profit: $<?php safer_echo($profit);?></p></h5>       
-    </div>
-  </div>
+
 
 <?php require(__DIR__ . "/partials/flash.php"); ?>
