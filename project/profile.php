@@ -133,15 +133,15 @@ if (isset($_POST["saved"])) {
         <div class="form-group">
             <label for="visibility">Account Visibility</label>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="visibility" id="private" value="0" checked>
+                <input class="form-check-input" type="radio" name="visibility" id="private" value="0" checked/>
                 <label class="form-check-label" for="visibility0">
-                    Private (email address hidden from other users)
+                    Private (account hidden from other users)
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="visibility" id="public" value="1" >
+                <input class="form-check-input" type="radio" name="visibility" id="public" value="1" />
                 <label class="form-check-label" for="visibility1">
-                    Public (email address visible to other users)
+                    Public (email address still hidden from other users)
                 </label>
             </div>
         </div>
