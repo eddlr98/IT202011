@@ -55,15 +55,19 @@ if (isset($_POST["Search"])) {
 <form method="POST">
     <div class="form-group">    
     <select name="category" value="<?php echo $result["category"];?>" >
-            <option value="-1">None</option>
+            <option value="-1">-None-</option>
             <?php foreach ($categories as $ctg): ?>
                 <option value="<?php safer_echo($ctg["category"]); ?>"
                 ><?php safer_echo($ctg["category"]); ?></option>
             <?php endforeach; ?>
         </select>
         <input name="query" placeholder="Search" value="<?php safer_echo($query); ?>"/>
-        <input type="submit" value="Search" name="Search"/>
-        <label>Sort by Ascending Price<input type="radio" value ="sort" name = "sort"/></label>
+        
+        <button style= "margin: 0; float: inline;" id="searchProd" name="Search" type="submit" value="Search"  class="btn btn-primary">Search Products</button>
+        <div class="form-check form-switch">
+			<input class="form-check-input" type="checkbox" name="sort" value="sort">
+			<label class="form-check-label" for="ascSort">--Sort by Ascending Price--</label>
+		</div>
         
     </div>
 </form>
