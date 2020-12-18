@@ -35,13 +35,11 @@ require_once(__DIR__ . "/../lib/helpers.php");
                 </div>
             </li>
         <?php endif; ?>
-        <?php if (has_role("User")): ?>
+        <?php if (is_logged_in()): ?>
             <li class="nav-item"><a class="nav-link" href="<?php echo getURL("list_products.php"); ?>">View Products</a></li>
             <!--- <li class="nav-item"><a class="nav-link" href="<?php echo getURL("list_cart.php"); ?>">View Carts</a></li> -->
             <li class="nav-item"><a class="nav-link" href="<?php echo getURL("shop.php"); ?>">Shop</a></li>
             <li class="nav-item"><a class="nav-link" href="<?php echo getURL("my_cart.php"); ?>">Cart</a></li>
-        <?php endif; ?>
-        <?php if (is_logged_in()): ?>
             <li class="nav-item"><a class="nav-link" href="<?php echo getURL("profile.php"); ?>">Profile</a></li>
             <li class="nav-item"><a class="nav-link" href="<?php echo getURL("logout.php"); ?>">Logout</a></li>
         <?php endif; ?>

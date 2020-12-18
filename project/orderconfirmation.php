@@ -10,7 +10,7 @@ if (!is_logged_in()) {
 <?php
 
 $db = getDB();
-$stmt = $db->prepare("SELECT count(*) as total from Orders where user_id=:id");
+$stmt = $db->prepare("SELECT * from Orders where user_id=:id");
 $orderResult = $stmt->fetch(PDO::FETCH_ASSOC);
 if(has_role("User")){
     $uid = get_user_id();
