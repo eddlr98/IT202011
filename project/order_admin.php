@@ -38,6 +38,16 @@ if(has_role("Admin")){
     </div>
   </div>
 
+<form method="_POST">
+  <select class="form-select" aria-label="Default select example">
+    <?php foreach ($categories as $ctg): ?>
+      <option value="<?php safer_echo($ctg["category"]); ?>"
+      ><?php safer_echo($ctg["category"]); ?></option>
+    <?php endforeach; ?>
+  </select>
+  
+</form>
+
 <div class="results">
     <div>
         <div><h3>Orders:</h3></div>
