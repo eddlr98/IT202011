@@ -16,7 +16,6 @@ $stmt->execute();
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-$balance = 1000000;
 $cost = calcNextProdCost();
 ?>
     <script>
@@ -53,10 +52,7 @@ $cost = calcNextProdCost();
 
         }*/
         function addToCart(itemId, cost){
-            if (cost > balance) {
-                alert("You can't afford this right now");
-                return;
-            }
+            
             //https://www.w3schools.com/xml/ajax_xmlhttprequest_send.asp
             let xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {

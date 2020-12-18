@@ -10,18 +10,12 @@ if (!has_role("Admin")) {
 
 <?php
 
+// get all the info about the orders limited to 10 at a time 
 $db = getDB();
-$stmt = $db->prepare("SELECT count(*) as total from Orders");
-$stmt->execute([":id"=>get_user_id()]);
-$orderResult = $stmt->fetch(PDO::FETCH_ASSOC);
+$stmt = $db->prepare("SELECT * FROM Orders ORDER by created DESC LIMIT 10");
+$stmt->execute();
+$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// just double checking admin status
-if(has_role("Admin")){
-    $db = getDB();
-    $stmt = $db->prepare("SELECT * FROM Orders ORDER by created DESC LIMIT 10");
-    $stmt->execute();
-    $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
 
 ?>
 
@@ -45,7 +39,7 @@ if(has_role("Admin")){
       ><?php safer_echo($ctg["category"]); ?></option>
     <?php endforeach; ?>
   </select>
-  
+
 </form>
 
 <div class="results">

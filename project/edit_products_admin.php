@@ -21,7 +21,7 @@ if(isset($_POST["save"])){
 	$price = $_POST["price"];
 	$desc = $_POST["description"];
 	$ctg = $_POST["category"];
-	$vis = false;
+	$vis = $_POST["visibility"];
 	if (isset($_POST["visibility"]) && $_POST["visibility"] == 'on') {
 		$vis = true;
 	}
@@ -35,7 +35,7 @@ if(isset($_POST["save"])){
 			":price"=>$price,
 			":desc"=>$desc,
 			":ctg"=>$ctg,
-			":vis"=>$vis ? "1" : "0",
+			":vis"=>$vis,
 			":id"=>$id
 		]);
 		if($r){
@@ -74,20 +74,20 @@ if(isset($id)){
 	<input name="description" placeholder="Description" value="<?php echo $result["description"];?>"/>
 	<label>Category</label>
 	<input name="category" placeholder="Category" value="<?php echo $result["category"];?>"/>
-	<label>Visibility</label>
 	<div class="form-group">
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="visibility" id="visibility" value="1">
-			<label class="form-check-label" for="visibility">
-				Visible
-			</label>
-		</div>
-		<div class="form-check">
-		<input class="form-check-input" type="radio" name="visibility" id="visibility" value="0">
-			<label class="form-check-label" for="visibility">
-				Not Visible
-			</label>
-		</div>
+	<label for="visibility">Product Visibility</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="visibility" id="private" value="0" checked/>
+                <label class="form-check-label" for="visibility0">
+                    Not Visible
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="visibility" id="public" value="1" />
+                <label class="form-check-label" for="visibility1">
+                    Visible
+                </label>
+            </div>
 	</div>
 	<input type="submit" name="save" value="Update"/>
 </form>

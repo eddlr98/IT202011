@@ -3,7 +3,7 @@
 $query = "";
 $results = [];
 $selectedCtg = '';
-$dbQuery = "SELECT name, id, price, category, quantity, description, visibility, user_id from Products WHERE 1 = 1 AND visibility = 1";
+$dbQuery = "SELECT name, id, price, category, quantity, description, visibility, user_id from Products WHERE quantity > 0 AND visibility = 1";
 $sort = "default";
 $params = [];
 if (isset($_POST["query"])) {
@@ -27,9 +27,9 @@ if (isset($_POST["Search"])) {
         $dbQuery .= " AND category = :cat ";
         $params[":cat"] = $selectedCtg; 
     }
-    if ($query != "") {
+    if (isset ($_POST["query"]) && ($_POST["query"]) != "") {
         $dbQuery .= " AND name LIKE :q ";
-        $params[":q"] = $query;
+        $params[":q"] = "%$query%";
     }
     if(isset($_POST["sort"])) {
         $sort = "price";
