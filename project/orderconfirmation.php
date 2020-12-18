@@ -12,7 +12,7 @@ if (!is_logged_in()) {
 $db = getDB();
 $stmt = $db->prepare("SELECT * from Orders where user_id=:id");
 $orderResult = $stmt->fetch(PDO::FETCH_ASSOC);
-if(has_role("User")){
+if(!has_role("Admin")){
     $uid = get_user_id();
     $db = getDB();
     $stmt = $db->prepare("SELECT total_price, created, address FROM Orders where user_id=:id ORDER by created DESC LIMIT 10");

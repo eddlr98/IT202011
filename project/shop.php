@@ -15,7 +15,7 @@ $stmt = $db->prepare("SELECT * FROM Products WHERE quantity > 0 ORDER BY CREATED
 $stmt->execute();
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
+$balance = 100000;
 $cost = calcNextProdCost();
 ?>
     <script>
